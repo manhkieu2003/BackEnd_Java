@@ -1,7 +1,7 @@
 package com.example.backend_java.hocgit;
 
-public class contact {
+public class trangchu {
     public static void main(String[] args) {
-        System.out.println("chao mung b den voi contact");
+        System.out.println("trang chu");
     }
 }
