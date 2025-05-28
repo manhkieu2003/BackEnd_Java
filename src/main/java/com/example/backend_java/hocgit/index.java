@@ -4,5 +4,6 @@ public class index {
     public static void main(String[] args) {
         System.out.println("Hoc git index");
         System.out.println("git thay doi modified");
+        System.out.println("chao mung ban den voi git");
     }
 }
