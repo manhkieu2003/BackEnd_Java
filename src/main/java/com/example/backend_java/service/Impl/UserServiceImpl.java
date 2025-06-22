@@ -1,5 +1,6 @@
 package com.example.backend_java.service.Impl;
 
+import com.example.backend_java.common.UserGender;
 import com.example.backend_java.common.UserStatus;
 import com.example.backend_java.controller.request.UserCreateRequest;
 import com.example.backend_java.controller.request.UserPasswordRequest;
@@ -15,6 +16,8 @@ import com.example.backend_java.repository.UserRepository;
 import com.example.backend_java.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,9 +31,11 @@ import java.util.List;
 
 @Slf4j
 @Service
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserServiceImpl  implements UserService {
     @Autowired
-    private UserRepository userRepository;
+    private  UserRepository userRepository;
     @Autowired
     private AddressRepository addressRepository;
     @Autowired
@@ -151,6 +156,12 @@ public class UserServiceImpl  implements UserService {
     @Override
     public Page<UserResponse> getallUsersByKeyword(String keyword, Pageable pageable) {
         Page<UserEntity> userEntities = userRepository.findByUsernameContainingIgnoreCase(keyword.trim(),pageable);
+        return userEntities.map(this::convertToUserResponse);
+    }
+
+    @Override
+    public Page<UserResponse> getUsersByCityAndGender(String city, UserGender gender, Pageable pageable) {
+        Page<UserEntity> userEntities = userRepository.findUsersByCityAndGender(city,gender,pageable);
         return userEntities.map(this::convertToUserResponse);
     }
 

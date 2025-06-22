@@ -71,6 +71,12 @@ public class UserController {
     public ResponseEntity<UserResponse> getUserDetail(@PathVariable long userId) {
         return ResponseEntity.ok(userService.getUserDetail(userId));
     }
+    @GetMapping("/city")
+    public ResponseEntity<List<UserResponse>> getUsersByCityAndGender(@RequestParam String city, @RequestParam UserGender gender, @ParameterObject Pageable pageable) {
+        Page<UserResponse> userResponsePage = userService.getUsersByCityAndGender(city,gender,pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(),userResponsePage);
+        return new ResponseEntity<>(userResponsePage.getContent(),headers,HttpStatus.OK);
+    }
 
 
 

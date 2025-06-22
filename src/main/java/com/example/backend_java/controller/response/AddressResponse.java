@@ -1,11 +1,12 @@
-package com.example.backend_java.controller.request;
+package com.example.backend_java.controller.response;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
-
 @Getter
-public class AddressRequest implements Serializable {
+@Setter
+public class AddressResponse implements Serializable {
     private String apartmentNumber;
     private String floor;
     private String building;
@@ -13,5 +14,4 @@ public class AddressRequest implements Serializable {
     private String street;
     private String city;
     private String country;
-    private Integer addressType;
 }

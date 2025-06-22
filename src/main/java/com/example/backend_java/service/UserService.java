@@ -1,5 +1,6 @@
 package com.example.backend_java.service;
 
+import com.example.backend_java.common.UserGender;
 import com.example.backend_java.controller.request.UserCreateRequest;
 import com.example.backend_java.controller.request.UserPasswordRequest;
 import com.example.backend_java.controller.request.UserUpdateRequest;
@@ -17,4 +18,5 @@ public interface UserService {
     void deleteUser(long userId);
     UserResponse getUserDetail(long userId);
     Page<UserResponse> getallUsersByKeyword(String keyword,Pageable pageable);
+    Page<UserResponse>  getUsersByCityAndGender(String city, UserGender gender, Pageable pageable);
 }
