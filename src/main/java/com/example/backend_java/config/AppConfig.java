@@ -1,6 +1,7 @@
 package com.example.backend_java.config;
 
 import com.example.backend_java.service.UserServiceDetail;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,8 +45,8 @@ public class AppConfig {
     }
     // config authenticationManager
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
     }
 
     //config authenticationprovider
@@ -62,5 +63,9 @@ public class AppConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
    }
+    @Bean
+    public Gson gson() {
+        return new Gson();
+    }
 
 }

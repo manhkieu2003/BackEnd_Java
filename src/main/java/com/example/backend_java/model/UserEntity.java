@@ -24,7 +24,7 @@ import java.util.List;
 @Entity
 @Table(name = "tbl_user")
 @ToString
-public class UserEntity implements UserDetails, Serializable {
+public class UserEntity implements UserDetails,Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -81,17 +81,17 @@ public class UserEntity implements UserDetails, Serializable {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
