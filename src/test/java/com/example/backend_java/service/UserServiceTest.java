@@ -118,7 +118,14 @@ class UserServiceTest {
 
     @Test
     void getUserDetail() {
-
+      // gia lap phuong thuc
+        when(userRepository.findById(1L)).thenReturn(java.util.Optional.of(manhkd));
+        UserResponse result = userService.getUserDetail(100L);
+        assertNotNull(result);
+        assertEquals(1L, result.getId());
+        assertEquals("manh", result.getFirstName());
+        assertEquals("kieu", result.getLastName());
+        verify(userRepository).findById(1L);
     }
 
     @Test

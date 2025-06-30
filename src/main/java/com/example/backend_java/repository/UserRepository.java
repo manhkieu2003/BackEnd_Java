@@ -22,4 +22,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     //Tìm tất cả người dùng có  địa chỉ ở ... và giới tính ...
     @Query("select i from UserEntity i join AddressEntity a on i.id = a.user.id where a.city=?1 and i.gender=?2")
     Page<UserEntity> findUsersByCityAndGender(String city, UserGender gender, Pageable pageable);
+    UserEntity findByUsername(String username);
 }
