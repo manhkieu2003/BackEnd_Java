@@ -12,19 +12,18 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.type.SqlTypes;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "tbl_user")
 @ToString
-public class UserEntity implements UserDetails,Serializable {
+public class UserEntity extends AbstractEntity<Long> implements UserDetails,Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -64,19 +63,23 @@ public class UserEntity implements UserDetails,Serializable {
     @Column(nullable = false)
     private UserType type;
 
-    @Column(name = "created_at", updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @CreationTimestamp
-    private Date createdAt;
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<UserHasRole> roles = new HashSet<>();
 
-    @Column(name = "updated_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    @UpdateTimestamp
-    private Date updatedAt;
+    @OneToMany(mappedBy = "user")
+    private Set<GroupHasUser> groups = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        //  1 get role
+        List<Role> rolelist = roles.stream().map(UserHasRole::getRole).toList();
+        // 2 get rolename
+        List<String> rolenames = rolelist.stream().map(Role::getName).toList();
+        // 3 add role name to authority
+
+        return rolenames.stream().map(SimpleGrantedAuthority::new).toList();
+      //  return rolenames.stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.toUpperCase())).toList();
+       // return List.of();
     }
 
     @Override

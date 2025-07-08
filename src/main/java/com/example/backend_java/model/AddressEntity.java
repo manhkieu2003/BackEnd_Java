@@ -14,11 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AddressEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class AddressEntity extends AbstractEntity<Long> {
     @Column(name = "apartment_number", length = 255)
     private String apartmentNumber;
 
@@ -47,14 +43,5 @@ public class AddressEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @Column(name = "created_at", updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @CreationTimestamp
-    private Date createdAt;
-
-    @Column(name = "updated_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    @UpdateTimestamp
-    private Date updatedAt;
 
 }

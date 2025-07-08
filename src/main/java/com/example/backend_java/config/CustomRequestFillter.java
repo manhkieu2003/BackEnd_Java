@@ -35,6 +35,7 @@ public class CustomRequestFillter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
        log.info("{} {}",request.getMethod(),request.getRequestURI());
+ // TODO : check authority by request url
        String authheader = request.getHeader("Authorization");
        log.info("header: {}",authheader);
        if (authheader != null && authheader.startsWith("Bearer ")) {
@@ -59,6 +60,7 @@ public class CustomRequestFillter extends OncePerRequestFilter {
            authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
            context.setAuthentication(authToken);
            SecurityContextHolder.setContext(context);
+           log.info("SecurityContextHolder: {}", SecurityContextHolder.getContext());
 
            filterChain.doFilter(request, response);
        } else {
